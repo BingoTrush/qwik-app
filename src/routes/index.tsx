@@ -1,29 +1,14 @@
 import { component$ } from '@builder.io/qwik';
 
-import type { DocumentHead } from '@builder.io/qwik-city';
-
 // @ts-ignore
-import VueCmp from '../vue/components/qwik-vue.vue';
+import App from '../vue/components/app.vue';
 
-import { qwikify$ } from '~/vue/qwikify';
+import { qwikify$ } from '../vue/qwikify';
 
-export const QwikVue = qwikify$(VueCmp)
+export const QwikVue = qwikify$(App)
 
 export default component$(() => {
   return (
-    <div>
-      <h1>Welcome to Qwik + Vue </h1>
-      <QwikVue/>
-    </div>
+    <QwikVue/>
   );
 });
-
-export const head: DocumentHead = {
-  title: 'Welcome to Qwik',
-  meta: [
-    {
-      name: 'description',
-      content: 'Qwik site description',
-    },
-  ],
-};
