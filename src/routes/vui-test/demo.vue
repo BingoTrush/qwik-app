@@ -1,7 +1,7 @@
 <template>
-    <StdAlert>
+    <div>
         {{ title }}
-    </StdAlert>
+    </div>
 </template>
 
 <script lang="ts">
