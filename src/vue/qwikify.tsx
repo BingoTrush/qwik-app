@@ -8,8 +8,8 @@ import {
 import { isServer } from '@builder.io/qwik/build';
 import type { QwikifyOptions, QwikifyProps } from './types';
 
-import { createSSRApp } from 'vue';
 import { renderToString } from 'vue/server-renderer';
+import { createSSRApp } from 'vue';
 
 export function qwikifyQrl<PROPS extends {}>(
   vueCmpQrl: QRL<any>,
@@ -31,18 +31,12 @@ export function qwikifyQrl<PROPS extends {}>(
 }
 
 export const renderVueQrl = async (vueCmpQrl: QRL<any>) => {
-  // const vueCmp = await vueCmpQrl.resolve()
-  // const result = await renderToString(vueCmp)
+  const vueCmp = await vueCmpQrl.resolve()
 
-  const app = createSSRApp({
-    data: () => ({
-      msg: 'Test CreateSSRApp'
-    }),
-    template: `<div>{{ msg }}</div>`
-  })
+  const app = createSSRApp(vueCmp);
 
   const result = await renderToString(app)
-  console.log('>>>>result',result);
+
   return <div dangerouslySetInnerHTML={result}></div>
 }
 
