@@ -8,14 +8,16 @@ import {
   $,
   useOn,
   useOnDocument,
-  useTask$
+  useTask$,
+  SSRRaw,
+  Slot
 } from '@builder.io/qwik';
 
 import { isServer } from '@builder.io/qwik/build';
 import type { QwikifyOptions, QwikifyProps } from './types';
 
 import { renderToString } from 'vue/server-renderer';
-import { createSSRApp } from 'vue';
+import { createSSRApp, defineComponent, h } from 'vue';
 
 export function qwikifyQrl<PROPS extends {}>(
   vueCmpQrl: QRL<any>,
@@ -69,12 +71,43 @@ export function qwikifyQrl<PROPS extends {}>(
 export const renderVueQrl = async (vueCmpQrl: QRL<any>, hostRef: Signal<HTMLElement | undefined>) => {
   const vueCmp = await vueCmpQrl.resolve()
 
-  const app = createSSRApp(vueCmp);
+  const mark = `<!--SLOT-->`;
 
-  const result = await renderToString(app)
+  const slots = {
+    'default': h(StaticHtml, {
+      value: mark,
+      name: 'test',
+      hydrate: true
+    })
+  };
+
+	const app = createSSRApp({ render: () => h(vueCmp, {}, slots) });
+
+  const html = await renderToString(app)
+
+  const startSlotComment = html.indexOf(mark);
+
+  if (startSlotComment >= 0) {
+    const beforeSlot = html.slice(0, startSlotComment);
+    const afterSlot = html.slice(startSlotComment + mark.length);
+
+    return (
+      <>
+        <SSRRaw data={beforeSlot}></SSRRaw>
+        <Slot/>
+        <SSRRaw data={afterSlot}></SSRRaw>
+      </>
+    )
+  }
 
   // Should be mount in this root element
-  return <div ref={hostRef} dangerouslySetInnerHTML={result}></div>
+  return (
+    <>
+      <div ref={hostRef}>
+        <SSRRaw data={html}></SSRRaw>
+      </div>
+    </>
+  )
 }
 
 /**
@@ -115,5 +148,31 @@ export const useWakeupSignal = (props: QwikifyProps<{}>, opts: QwikifyOptions = 
   }
   return [signal, clientOnly, activate] as const;
 };
+
+/**
+ * 
+ */
+/**
+ * Astro passes `children` as a string of HTML, so we need
+ * a wrapper `div` to render that content as VNodes.
+ *
+ * This is the Vue + JSX equivalent of using `<div v-html="value" />`
+ */
+const StaticHtml = defineComponent({
+	props: {
+		value: String,
+		name: String,
+		hydrate: {
+			type: Boolean,
+			default: true,
+		},
+	},
+	setup({ name, value, hydrate }) {
+		if (!value) return () => null;
+		const tagName = hydrate ? 'qwik-slot' : 'qwik-static-slot';
+		return () => h(tagName, { name, innerHTML: value });
+	},
+});
+
 
 export const qwikify$ = /*#__PURE__*/ implicit$FirstArg(qwikifyQrl);

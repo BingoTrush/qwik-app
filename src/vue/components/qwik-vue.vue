@@ -1,6 +1,7 @@
 <template>
     <div class="vue3">
         <h1 class="txt">Welcome to Qwik + Vue3 </h1>
+        <slot/>
         <!-- <StdButton @click="count++">
             {{ count }}
         </StdButton> -->

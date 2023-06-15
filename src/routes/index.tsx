@@ -12,7 +12,9 @@ export const QwikVue = qwikify$(VueCmp)
 export default component$(() => {
   return (
     <div>
-      <QwikVue client:visible/>
+      <QwikVue client:visible>
+        This is Slot
+      </QwikVue>
     </div>
   );
 });
