@@ -19,6 +19,8 @@ import type { QwikifyOptions, QwikifyProps } from './types';
 import { renderToString } from 'vue/server-renderer';
 import { createSSRApp, defineComponent, h } from 'vue';
 
+const SLOT_SYMBOL = '<!--SLOT-->';
+
 export function qwikifyQrl<PROPS extends {}>(
   vueCmpQrl: QRL<any>,
 ) {
@@ -42,7 +44,17 @@ export function qwikifyQrl<PROPS extends {}>(
       if (element) {
         const vueCmp = await vueCmpQrl.resolve();
 
-        const app = createSSRApp(vueCmp);
+        // const app = createSSRApp(vueCmp);
+
+        const slots = {
+          'default': h(StaticHtml, {
+            value: SLOT_SYMBOL,
+            name: 'test',
+            hydrate: true
+          })
+        };
+      
+        const app = createSSRApp({ render: () => h(vueCmp, {}, slots) });
 
         app.mount(element)
       }
@@ -50,8 +62,12 @@ export function qwikifyQrl<PROPS extends {}>(
   
     if (isServer) {
       const jsx = renderVueQrl(vueCmpQrl, hostRef)
+
       // Render Vue in SSR
-      return (<>{jsx}</>)
+      return (
+      <>
+          {jsx}
+      </>)
     }
 
     return (
@@ -71,11 +87,9 @@ export function qwikifyQrl<PROPS extends {}>(
 export const renderVueQrl = async (vueCmpQrl: QRL<any>, hostRef: Signal<HTMLElement | undefined>) => {
   const vueCmp = await vueCmpQrl.resolve()
 
-  const mark = `<!--SLOT-->`;
-
   const slots = {
     'default': h(StaticHtml, {
-      value: mark,
+      value: SLOT_SYMBOL,
       name: 'test',
       hydrate: true
     })
@@ -85,18 +99,20 @@ export const renderVueQrl = async (vueCmpQrl: QRL<any>, hostRef: Signal<HTMLElem
 
   const html = await renderToString(app)
 
-  const startSlotComment = html.indexOf(mark);
+  // console.log('>>>>>>html', html);
+
+  const startSlotComment = html.indexOf(SLOT_SYMBOL);
 
   if (startSlotComment >= 0) {
     const beforeSlot = html.slice(0, startSlotComment);
-    const afterSlot = html.slice(startSlotComment + mark.length);
+    const afterSlot = html.slice(startSlotComment + SLOT_SYMBOL.length);
 
     return (
-      <>
+      <div ref={hostRef}>
         <SSRRaw data={beforeSlot}></SSRRaw>
         <Slot/>
         <SSRRaw data={afterSlot}></SSRRaw>
-      </>
+      </div>
     )
   }
 
@@ -150,13 +166,7 @@ export const useWakeupSignal = (props: QwikifyProps<{}>, opts: QwikifyOptions = 
 };
 
 /**
- * 
- */
-/**
- * Astro passes `children` as a string of HTML, so we need
  * a wrapper `div` to render that content as VNodes.
- *
- * This is the Vue + JSX equivalent of using `<div v-html="value" />`
  */
 const StaticHtml = defineComponent({
 	props: {
@@ -169,7 +179,7 @@ const StaticHtml = defineComponent({
 	},
 	setup({ name, value, hydrate }) {
 		if (!value) return () => null;
-		const tagName = hydrate ? 'qwik-slot' : 'qwik-static-slot';
+		const tagName = hydrate ? 'q-slot' : 'q-static-slot';
 		return () => h(tagName, { name, innerHTML: value });
 	},
 });

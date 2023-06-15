@@ -1,10 +1,9 @@
 <template>
     <div class="vue3">
-        <h1 class="txt">Welcome to Qwik + Vue3 </h1>
-        <slot/>
-        <!-- <StdButton @click="count++">
-            {{ count }}
-        </StdButton> -->
+        <h1 :class="['txt', { red: count > 5 }]">Welcome to Qwik + Vue3 </h1>
+
+        <button @click="count++">{{count}}</button>
+        <slot name="default"/>
     </div>
 </template>
 
@@ -23,5 +22,9 @@ const count = ref(0);
 
 .txt {
     color: @--color-primary;
+}
+
+.red {
+    color: @--color-danger;
 }
 </style>
