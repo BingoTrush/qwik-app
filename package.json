@@ -36,7 +36,9 @@
     "typescript": "5.0.4",
     "undici": "5.22.1",
     "vite": "4.3.9",
-    "vite-tsconfig-paths": "4.2.0"
+    "vite-tsconfig-paths": "4.2.0",
+    "@fmfe/tms.js": "*",
+    "vue-class-setup": "*"
   },
   "dependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

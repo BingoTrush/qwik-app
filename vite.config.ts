@@ -9,7 +9,6 @@ export default defineConfig(() => {
   return {
     plugins: [qwikCity(), qwikVite(), vue(), tsconfigPaths()],
     css: {
-      // 预处理器配置项
       preprocessorOptions: {
         less: {
           additionalData: `@import './src/global.less';`
@@ -21,5 +20,10 @@ export default defineConfig(() => {
         'Cache-Control': 'public, max-age=600',
       },
     },
+    optimizeDeps: {
+      exclude: [
+        '@std\/vui'
+      ]
+    }
   };
 });
