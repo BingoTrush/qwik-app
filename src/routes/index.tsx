@@ -12,8 +12,7 @@ export const QwikVue = qwikify$(VueCmp)
 export default component$(() => {
   return (
     <div>
-      <h1>Welcome to Qwik + Vue </h1>
-      <QwikVue/>
+      <QwikVue client:visible/>
     </div>
   );
 });

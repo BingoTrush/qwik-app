@@ -8,6 +8,14 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig(() => {
   return {
     plugins: [qwikCity(), qwikVite(), vue(), tsconfigPaths()],
+    css: {
+      // 预处理器配置项
+      preprocessorOptions: {
+        less: {
+          additionalData: `@import './src/global.less';`
+        },
+      },
+    },
     preview: {
       headers: {
         'Cache-Control': 'public, max-age=600',
