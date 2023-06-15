@@ -9,25 +9,38 @@
     <div class="root">
         <h1>{{ title }}</h1>
         <button @click="increment">{{count}}</button>
+
+        <!-- <StdAlert>{{ count }}</StdAlert> -->
         <slot></slot>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import { Component } from 'vue-property-decorator';
+// import { StdAlert } from '@std/vui'
+import { defineComponent } from 'vue';
+import { Define, Setup } from 'vue-class-setup';
 
-@Component
-export default class App extends Vue {
+@Setup
+export class App extends Define {
     public count = 0;
     public get title() {
         return `Root App`
     }
 
     public increment() {
-        console.log('>>>>>', this.count);
+        const result = 
         this.count++
     }
 }
+
+export default defineComponent({
+    name: "app",
+    ...App.inject()
+})
+</script>
+
+<script lang=ts setup>
+defineEmits();
+defineProps();
 </script>
 
