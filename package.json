@@ -18,7 +18,8 @@
     "lint": "eslint \"src/**/*.ts*\"",
     "preview": "qwik build preview && vite preview --open",
     "start": "vite --open --mode ssr",
-    "qwik": "qwik"
+    "qwik": "qwik",
+    "clear": "rm -rf node_modules && npm i && npm start"
   },
   "devDependencies": {
     "@builder.io/qwik": "^1.1.5",

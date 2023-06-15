@@ -3,7 +3,7 @@ import { QwikCityProvider } from '@builder.io/qwik-city'
 import './global.css';
 
 // @ts-ignore
-import App from './vue/components/app.vue';
+import App from './app.vue';
 
 import { qwikify$ } from './vue/qwikify';
 
@@ -17,7 +17,7 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body>
-          <VueApp/>
+          <VueApp client:visible/>
       </body>
     </QwikCityProvider>
   );
