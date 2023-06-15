@@ -9,7 +9,7 @@
 <script lang="ts">
 import Vue from 'vue';
 import { Component } from 'vue-property-decorator';
-
+import { StdModal } from '@std/vui';
 @Component
 export default class App extends Vue {
     public count = 0;
@@ -18,7 +18,7 @@ export default class App extends Vue {
     }
 
     public increment() {
-        console.log('>>>>>', this.count);
+        
         this.count++
     }
 }

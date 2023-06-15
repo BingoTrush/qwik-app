@@ -13,5 +13,13 @@ export default defineConfig(() => {
         'Cache-Control': 'public, max-age=600',
       },
     },
+    css: {
+      // 预处理器配置项
+      preprocessorOptions: {
+        less: {
+          additionalData: `@import './src/global.less';`
+        },
+      },
+    }
   };
 });

@@ -1,6 +1,8 @@
 import { component$ } from '@builder.io/qwik';
 import { QwikCityProvider } from '@builder.io/qwik-city'
-import './global.css';
+// import './global.css';
+
+import '@std/theme/src/var.css';
 
 // @ts-ignore
 import App from './app.vue';
@@ -16,7 +18,7 @@ export default component$(() => {
         <meta charSet="utf-8" />
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body>
+      <body data-theme="maps-std-light">
           <VueApp client:visible/>
       </body>
     </QwikCityProvider>

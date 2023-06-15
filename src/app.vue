@@ -1,3 +1,10 @@
+<style lang="less">
+.root {
+    h1 {
+        color: @--color-primary;
+    }
+}
+</style>
 <template>
     <div class="root">
         <h1>{{ title }}</h1>
