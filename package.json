@@ -40,6 +40,7 @@
     "vue-server-renderer": "2.7.14"
   },
   "dependencies": {
-    "@std/vui": "^1.3.22"
+    "@std/vui": "^1.3.22",
+    "view-design": "^4.7.0"
   }
 }

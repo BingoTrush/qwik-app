@@ -2,6 +2,7 @@ import { component$ } from '@builder.io/qwik';
 import { QwikCityProvider } from '@builder.io/qwik-city'
 
 import '@std/theme/src/var.css';
+import 'view-design/dist/styles/iview.css';
 
 import App from './app.vue';
 
