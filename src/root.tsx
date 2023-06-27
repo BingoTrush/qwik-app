@@ -19,11 +19,7 @@ export default component$(() => {
         <link rel="manifest" href="/manifest.json" />
       </head>
       <body data-theme={theme}>
-          <VueApp client:visible>
-            <div>
-              VueAppSlot
-            </div>
-          </VueApp>
+          <VueApp client:visible></VueApp>
       </body>
     </QwikCityProvider>
   );

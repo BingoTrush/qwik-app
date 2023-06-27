@@ -2,16 +2,16 @@
     <div class="layout">
         <Layout :style="{minHeight: '100vh'}">
             <Sider collapsible :collapsed-width="60" v-model="isCollapsed">
-                <Menu active-name="1-2" theme="dark" width="auto" :class="menuitemClasses">
-                    <MenuItem name="1-1">
+                <Menu active-name="/qwik-overview" theme="dark" width="auto" :class="menuitemClasses">
+                    <MenuItem name="/qwik-overview">
                         <Icon type="ios-navigate"></Icon>
                         <span>O1</span>
                     </MenuItem>
-                    <MenuItem name="1-2">
+                    <MenuItem name="/">
                         <Icon type="search"></Icon>
                         <span>O2</span>
                     </MenuItem>
-                    <MenuItem name="1-3">
+                    <MenuItem name="/test">
                         <Icon type="settings"></Icon>
                         <span>O3</span>
                     </MenuItem>
@@ -26,7 +26,8 @@
                         <BreadcrumbItem>Layout</BreadcrumbItem>
                     </Breadcrumb>
                     <Card>
-                        <QwikChild style="height: 600px">Content</QwikChild>
+                        <!-- <QwikChild style="height: 600px">Content</QwikChild> -->
+                        <router-view></router-view>
                     </Card>
                 </Content>
             </Layout>
@@ -41,13 +42,7 @@ import QwikChild from './vue-component/qwik-child.vue';
 import { Layout, Sider, Menu, MenuItem, Header, Content, Breadcrumb, BreadcrumbItem, Card, Icon} from 'view-design';
 @Setup
 export class App extends Define<Props> {
-    public count = 0;
-
     public isCollapsed = false
-
-    public increment() {
-        this.count++
-    }
 
     public get menuitemClasses() {
         return [

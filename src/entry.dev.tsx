@@ -12,5 +12,6 @@ import Root from './root';
  * - Optimizer/Serialization/Deserialization code is not exercised!
  */
 export default function (opts: RenderOptions) {
+  console.log("opts", opts);
   return render(document, <Root />, opts);
 }
