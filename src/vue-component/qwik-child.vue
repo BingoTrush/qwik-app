@@ -3,8 +3,7 @@
         <p>{{ title }}</p>
         <slot></slot>
         <p>{{ msg }}</p>
-        <!-- <StdButton/> -->
-        <Button>Iview Button</Button>
+        <Button @click="btnClick">Iview Button</Button>
     </div>
 </template>
 
@@ -14,7 +13,6 @@ import { Component, Prop } from 'vue-property-decorator';
 import { Button } from 'view-design';
 @Component({
     components: {
-        // StdButton
         Button
     }
 })
@@ -24,6 +22,10 @@ export default class App extends Vue {
 
     public get title() {
         return "Qwik Child"
+    }
+
+    public btnClick() {
+        console.log(this);
     }
 }
 </script>

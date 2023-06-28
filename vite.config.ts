@@ -20,11 +20,6 @@ export default defineConfig(() => {
           additionalData: `@import './src/global.less';`
         },
       },
-    },
-    server: {
-      hmr: {
-        overlay: false
-      }
     }
   };
 });

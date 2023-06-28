@@ -26,8 +26,7 @@
                         <BreadcrumbItem>Layout</BreadcrumbItem>
                     </Breadcrumb>
                     <Card>
-                        <!-- <QwikChild style="height: 600px">Content</QwikChild> -->
-                        <router-view></router-view>
+                        <QwikChild style="height: 600px">Content</QwikChild>
                     </Card>
                 </Content>
             </Layout>
