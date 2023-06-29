@@ -1,3 +1,15 @@
+# 安装启动
+- 本项目为qwik脚手架初始化, 启动项目前,需执行以下代码
+  :::danger
+      没有安装,会有异常
+  :::
+  ```bash
+  cd workdir
+  npm create qwik@latest
+  ```
+  
+  npm 
+  ``` 
 # 当前遇到问题
 
 1. slot 插槽 的实现
